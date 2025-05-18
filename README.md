@@ -87,6 +87,117 @@ Aplikasi ini menggunakan **Basic Authentication** untuk sebagian besar *endpoint
 
 ---
 
+
+### 📝 Request Body Payloads
+
+Bagian ini merinci struktur JSON yang diharapkan untuk permintaan `POST` dan `PUT`.
+
+---
+
+#### 📌 User Registration (`POST /register`)
+
+- **`username`** (string, wajib): Nama pengguna unik.  
+- **`password`** (string, wajib): Kata sandi pengguna.
+
+```json
+{
+  "username": "userbaru",
+  "password": "PasswordAman123!"
+}
+```
+
+---
+
+#### 📚 Create Book (`POST /books`)
+
+- **`title`** (string, wajib): Judul buku.  
+- **`category_id`** (integer, wajib): ID kategori tempat buku berada.  
+- **`description`** (string, opsional): Deskripsi singkat buku.  
+- **`image_url`** (string, opsional): URL gambar sampul buku.  
+- **`release_year`** (integer, wajib): Tahun rilis buku.  
+- **`price`** (integer, wajib): Harga buku (dalam mata uang lokal).  
+- **`total_page`** (integer, wajib): Jumlah halaman buku.  
+- **`thickness`** (string, opsional): Ketebalan buku (misalnya, "tipis", "sedang", "tebal").
+
+```json
+{
+  "title": "Filosofi Teras",
+  "category_id": 4,
+  "description": "Buku tentang filosofi stoikisme untuk kehidupan sehari-hari.",
+  "image_url": "https://example.com/filosofi_teras.jpg",
+  "release_year": 2018,
+  "price": 85000,
+  "total_page": 300,
+  "thickness": "sedang"
+}
+```
+
+---
+
+#### 📝 Update Book (`PUT /books/:id`)
+
+Semua bidang bersifat opsional. Kirimkan hanya bidang yang ingin Anda perbarui.
+
+```json
+{
+  "description": "Versi revisi dengan bab tambahan.",
+  "price": 90000
+}
+```
+
+---
+
+#### 🗂️ Create Category (`POST /categories`)
+
+- **`name`** (string, wajib): Nama kategori baru.
+
+```json
+{
+  "name": "Self-Improvement"
+}
+```
+
+---
+
+#### 🛠️ Update Category (`PUT /categories/:id`)
+
+- **`name`** (string, opsional): Nama kategori yang diperbarui.
+
+```json
+{
+  "name": "Pengembangan Diri"
+}
+```
+
+---
+
+#### ⭐ Create Review (`POST /books/:book_id/reviews`)
+
+- **`rating`** (integer, wajib): Penilaian buku (1-5).  
+- **`comment`** (string, opsional): Komentar atau ulasan tentang buku.  
+  > Catatan: `user_id` secara otomatis diambil dari pengguna yang terautentikasi.
+
+```json
+{
+  "rating": 5,
+  "comment": "Buku yang sangat menginspirasi dan mudah dipahami!"
+}
+```
+
+---
+
+#### 🔁 Update Review (`PUT /reviews/:id`)
+
+Semua bidang bersifat opsional. Kirimkan hanya bidang yang ingin Anda perbarui.
+
+```json
+{
+  "rating": 4,
+  "comment": "Konten bagus, tapi kadang agak berulang."
+}
+```
+
+
 ## 📄 License
 
 This project is licensed under the MIT License.
