@@ -1,6 +1,6 @@
 -- 1_.initiate.sql
 
--- migrate Up
+-- +migrate Up
 -- Users Table
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
@@ -88,7 +88,7 @@ INSERT INTO books (title, category_id, description, image_url, release_year, pri
 -- ----------------------------------------------------------------------
 
 
--- migrate Down
+-- +migrate Down
 DROP TABLE IF EXISTS reviews;
 DROP TABLE IF EXISTS books;
 DROP TABLE IF EXISTS categories;
