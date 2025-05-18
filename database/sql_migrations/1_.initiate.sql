@@ -1,4 +1,6 @@
 -- 1_.initiate.sql
+
+-- migrate Up
 -- Users Table
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
@@ -54,8 +56,40 @@ CREATE TABLE IF NOT EXISTS reviews (
     UNIQUE (book_id, user_id) -- A user can only review a book once
 );
 
--- Add sample user (for testing login)
--- IMPORTANT: Replace 'securepassword' with a bcrypt hash generated from a tool or your register endpoint
--- INSERT INTO users (username, password, created_by, modified_by) VALUES ('testuser', '$2a$10$YourGeneratedBcryptHashHere...', 0, 0);
--- Example hash for 'password': $2a$10$e.g.Y6W4lH7uX9P4n2g5a.Vf8o7j9k0l1m2n3o4p5q6r7s8t9u0v1w2x3y4z5A6B7C
--- You should register a user via the /register endpoint to get a valid hash.
+-- ----------------------------------------------------------------------
+-- START: Initial Data Inserts
+-- ----------------------------------------------------------------------
+
+-- Insert Sample User (for testing login)
+-- IMPORTANT:
+-- DO NOT insert plaintext passwords here.
+-- Instead, use the /register endpoint to create users and get a bcrypt hash.
+-- Once you have a hash, you can uncomment and insert, e.g.:
+-- INSERT INTO users (username, password, created_by, modified_by) VALUES ('testuser', '$2a$10$YOUR_BCRYPT_HASH_HERE.e.g.Y6W4lH7uX9P4n2g5a', 0, 0);
+
+-- Insert Sample Categories
+INSERT INTO categories (name, created_by, modified_by) VALUES
+('Fiction', 0, 0),
+('Science Fiction', 0, 0),
+('Fantasy', 0, 0),
+('Non-Fiction', 0, 0);
+
+-- Insert Sample Books
+-- IMPORTANT: Ensure category_id values match existing IDs in your categories table.
+-- If categories are inserted above, their IDs will likely be 1, 2, 3, 4 respectively.
+INSERT INTO books (title, category_id, description, image_url, release_year, price, total_page, thickness, created_by, modified_by) VALUES
+('The Hitchhiker''s Guide to the Galaxy', 2, 'A comedic science fiction series.', 'http://example.com/hitchhiker.jpg', 1979, 150000, 193, 'tipis', 0, 0),
+('Lord of the Rings', 3, 'An epic fantasy adventure.', 'http://example.com/lotr.jpg', 1954, 250000, 1178, 'tebal', 0, 0),
+('Sapiens: A Brief History of Humankind', 4, 'A non-fiction book exploring the history of humanity.', 'http://example.com/sapiens.jpg', 2011, 200000, 443, 'tebal', 0, 0),
+('1984', 1, 'A dystopian social science fiction novel.', 'http://example.com/1984.jpg', 1949, 120000, 328, 'tebal', 0, 0);
+
+-- ----------------------------------------------------------------------
+-- END: Initial Data Inserts
+-- ----------------------------------------------------------------------
+
+
+-- migrate Down
+DROP TABLE IF EXISTS reviews;
+DROP TABLE IF EXISTS books;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS users;
